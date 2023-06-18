@@ -1,0 +1,9 @@
+.card-hover-text{
+    display:none;
+  }
+  .card:hover .card-text{
+    display:none;
+  }
+  .card:hover .card-hover-text{
+    display:block;
+  }
