@@ -16,6 +16,9 @@ app.get("/", (req, res) => {
 app.get("/disclaimer", async(req, res) => {
     res.sendFile(path.join(__dirname, 'disclaimer.html'));
 });
+app.get("/labtested", async(req, res) => {
+    res.sendFile(path.join(__dirname, 'labtested.html'));
+});
 app.get("/cards", async(req, res) => {
     const c = await cards();
     res.json(c);
@@ -25,6 +28,9 @@ app.listen(3000, () => {
     console.log('Listening on port ' + 3000);
 });
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -41,7 +47,6 @@ async function cards() {
     });
     await doc.loadInfo(); // loads document properties and worksheets
     console.log(doc.title);
-    // await doc.updateProperties({ title: 'renamed doc' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
     console.log(sheet.title);
