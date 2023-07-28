@@ -28,9 +28,6 @@ app.listen(3000, () => {
     console.log('Listening on port ' + 3000);
 });
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
