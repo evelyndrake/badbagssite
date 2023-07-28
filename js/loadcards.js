@@ -1,13 +1,49 @@
-console.log("Hello World2!");
+console.log("Loading cards...");
 // fetch /cards
 var bagData = [];
+var bagDataNormal = [];
+var bagDataAlpha = [];
 $.getJSON("/cards", function(data) {
     for (var i in data) {
         bagData.push(data[i]);
     }
+    // replace strings
+    for (var x = bagData.length - 1; x > -1; x--) {
+        if ((bagData[x].length > 6) && (bagData[x][7] != "")) {
+            if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
+                bagData[x][7] = bagData[x][7].replace(/tranq/g, "xylazine")
+            }
+            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
+                bagData[x][7] = bagData[x][7].replace(/fent/g, "fentanyl")
+            }
+            if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
+                bagData[x][7] = bagData[x][7].replace(/Tranq/g, "xylazine")
+            }
+            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
+                bagData[x][7] = bagData[x][7].replace(/Fent/g, "fentanyl")
+            }
+        }
+    }
+
+    for (var x = bagData.length - 1; x > -1; x--) {
+        for (var y = bagData.length - 1; y > -1; y--) {
+            if ((bagData[x][2] !== "") && (x !== y) && (bagData[x][2].toUpperCase() == bagData[y][2].toUpperCase())) {
+                bagData[x][8] = 1;
+                bagData[y][8] = 1;
+            }
+        }
+    }
+    bagDataNormal = [...bagData];
+        bagDataAlpha = [...bagData];
+        bagDataAlpha.sort(function(a, b) {
+            var textB = a[2].toUpperCase();
+            var textA = b[2].toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
     var deck = document.getElementById("deck");
     var table = document.getElementById("spreadsheet");
     var toggle = document.getElementById("spreadsheetToggle");
+    var toggle2 = document.getElementById("alphaToggle");
     var filterButton = document.getElementById("filterButton");
     var locationField = document.getElementById("locationField");
 
@@ -15,9 +51,12 @@ $.getJSON("/cards", function(data) {
     var xylazineFilterText = "";
     drawElements();
 
-    // when the user clicks on the toggle switch, redraw the cards
+    // when the user clicks on the toggle switches, redraw the cards
 
     toggle.addEventListener("click", function() {
+        drawElements();
+    });
+    toggle2.addEventListener("click", function() {
         drawElements();
     });
     filterButton.addEventListener("click", function() {
@@ -38,11 +77,24 @@ $.getJSON("/cards", function(data) {
 
     function drawElements() {
         var numOfBags = 52;
+        deck.innerHTML = "";
+        if (toggle2.checked) {
+            bagData = [...bagDataAlpha];
+        } else {
+            bagData = [...bagDataNormal];
+        }
         if (toggle.checked) {
             table.innerHTML = "<thead><tr><th scope=\"col\">Date</th><th scope=\"col\">Name</th><th scope=\"col\">Location</th><th scope=\"col\">Info</th></tr></thead>";
         }
-        deck.innerHTML = "";
+        
+        
         for (var x = bagData.length - 1; x > -1; x--) {
+            // EXCLUDE UNC LABS
+            if (bagData[x].length > 6 && bagData[x][7] != "") {
+                if ((bagData[x][7] + "").toLowerCase().includes("unc lab")) {
+                    continue;
+                }
+            }
             // filters
             if (nameField.value != "") {
                 if (!((bagData[x][2] + " " + bagData[x][3]).toLowerCase().includes(nameField.value.toLowerCase()))) {
@@ -136,12 +188,12 @@ $.getJSON("/cards", function(data) {
                         badge.innerHTML = "Xylazine Negative";
                     }
                 }
-                // UNC badges
-                if (bagData[x].length > 6 && bagData[x][7] != "") {
-                    if ((bagData[x][7] + "").toLowerCase().includes("unc lab")) {
+                // duplicate badges
+                if (bagData[x].length > 7 && bagData[x][8] != "") {
+                    if (bagData[x][8] === 1) {
                         var badge = td.appendChild(document.createElement("span"));
-                        badge.className = "badge rounded-pill bg-info";
-                        badge.innerHTML = "UNC Lab Tested";
+                        badge.className = "badge rounded-pill bg-warning";
+                        badge.innerHTML = "Duplicate";
                     }
                 }
 
@@ -191,12 +243,12 @@ $.getJSON("/cards", function(data) {
                         badge.innerHTML = "Xylazine Negative";
                     }
                 }
-                // UNC badges
-                if (bagData[x].length > 6 && bagData[x][7] != "") {
-                    if ((bagData[x][7] + "").toLowerCase().includes("unc lab")) {
+                // duplicate badges
+                if (bagData[x].length > 7 && bagData[x][8] != "") {
+                    if (bagData[x][8] === 1) {
                         var badge = div.appendChild(document.createElement("span"));
-                        badge.className = "badge rounded-pill bg-info";
-                        badge.innerHTML = "UNC Lab Tested";
+                        badge.className = "badge rounded-pill bg-warning";
+                        badge.innerHTML = "Duplicate";
                     }
                 }
 
