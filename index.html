@@ -28,16 +28,16 @@
             document.getElementById('printHide1').hidden = false;
     }
     function checkPassword() {
-        var password = prompt("Please enter the password to access the admin page.");
-        fetch('/auth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({password: password})
-        })
+        // var password = prompt("Please enter the password to access the admin page.");
+        // fetch('/auth', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({password: password})
+        // })
         // if () {
-        //     //window.location.href = "/adminview";
+        window.location.href = "/adminview";
         // }
         // else {
         //     alert("Incorrect password. Please try again.");
