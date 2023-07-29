@@ -13,14 +13,8 @@ $.getJSON("/cards", function(data) {
             if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
                 bagData[x][7] = bagData[x][7].replace(/tranq/g, "xylazine")
             }
-            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
-                bagData[x][7] = bagData[x][7].replace(/fent/g, "fentanyl")
-            }
             if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
                 bagData[x][7] = bagData[x][7].replace(/Tranq/g, "xylazine")
-            }
-            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
-                bagData[x][7] = bagData[x][7].replace(/Fent/g, "fentanyl")
             }
         }
     }

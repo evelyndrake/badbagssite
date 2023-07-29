@@ -11,14 +11,8 @@ $.getJSON("/cards", function(data) {
             if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
                 bagData[x][7] = bagData[x][7].replace(/tranq/g, "xylazine")
             }
-            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
-                bagData[x][7] = bagData[x][7].replace(/fent/g, "fentanyl")
-            }
             if ((bagData[x][7] + "").toLowerCase().includes("tranq")) {
                 bagData[x][7] = bagData[x][7].replace(/Tranq/g, "xylazine")
-            }
-            if ((bagData[x][7] + "").toLowerCase().includes("fent")) {
-                bagData[x][7] = bagData[x][7].replace(/Fent/g, "fentanyl")
             }
         }
     }
@@ -53,8 +47,9 @@ $.getJSON("/cards", function(data) {
             if (bagData[x].length > 7 && bagData[x][8] != "") {
                 td.innerHTML = bagData[x][8]
             } else {
-                td.innerHTML = "No information specified"
+                td.innerHTML = "No quantity specified"
             }
+            new_row.appendChild(document.createElement("button")).className = "btn btn-primary";
             td = new_row.appendChild(document.createElement("td"));
             if (bagData[x].length > 6 && bagData[x][7] != "") {
                 td.innerHTML = bagData[x][7]
