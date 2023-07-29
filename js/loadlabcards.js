@@ -17,7 +17,7 @@ $.getJSON("/cards", function(data) {
         }
     }
 
-
+    
     bagData.sort(function(a, b) {
         var textB = a[2].toUpperCase();
         var textA = b[2].toUpperCase();

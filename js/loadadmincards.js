@@ -16,6 +16,19 @@ $.getJSON("/cards", function(data) {
             }
         }
     }
+    for (var x = bagData.length - 1; x > -1; x--) {
+        for (var y = bagData.length - 1; y > -1; y--) {
+            if ((bagData[x][2] !== "") && (x !== y) && (bagData[x][2].toUpperCase() == bagData[y][2].toUpperCase())) {
+                bagData[x][9] = 1;
+                bagData[y][9] = 1;
+            }
+        }
+    }
+    bagData.sort(function(a, b) {
+        var textB = a[2].toUpperCase();
+        var textA = b[2].toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
     var table = document.getElementById("spreadsheet");
     drawElements();
 
@@ -83,6 +96,14 @@ $.getJSON("/cards", function(data) {
                     var badge = td.appendChild(document.createElement("span"));
                     badge.className = "badge rounded-pill bg-info";
                     badge.innerHTML = "Lab Tested";
+                }
+            }
+            // duplicate badges
+            if (bagData[x].length > 8 && bagData[x][9] != "") {
+                if (bagData[x][9] === 1) {
+                    var badge = td.appendChild(document.createElement("span"));
+                    badge.className = "badge rounded-pill bg-warning";
+                    badge.innerHTML = "Duplicate";
                 }
             }
 
