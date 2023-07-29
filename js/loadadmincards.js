@@ -30,9 +30,20 @@ $.getJSON("/cards", function(data) {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });
     var table = document.getElementById("spreadsheet");
+
+    var labelCount = document.getElementById("labelCount");
+    labelCount.innerHTML = "Total number of bags: <strong>" + bagData.length + "</strong>";
+    var fentNum = 0;
+    var tranqNum = 0;
+    
+
     drawElements();
 
     function drawElements() {
+        fentNum = 0;
+        tranqNum = 0;
+        var reportNum = 0;
+        var testNum = 0;
         table.innerHTML = "<thead><tr><th scope=\"col\">Date</th><th scope=\"col\">Name</th><th scope=\"col\">Location</th><th scope=\"col\">Times Reported</th><th scope=\"col\">Info</th></tr></thead>";
         for (var x = bagData.length - 1; x > -1; x--) {
             
@@ -59,8 +70,10 @@ $.getJSON("/cards", function(data) {
             td = new_row.appendChild(document.createElement("td"));
             if (bagData[x].length > 7 && bagData[x][8] != "") {
                 td.innerHTML = bagData[x][8]
+                reportNum += parseInt(bagData[x][8]);
             } else {
-                td.innerHTML = "No quantity specified"
+                td.innerHTML = "1"
+                reportNum++;
             }
             td = new_row.appendChild(document.createElement("td"));
             if (bagData[x].length > 6 && bagData[x][7] != "") {
@@ -74,6 +87,7 @@ $.getJSON("/cards", function(data) {
                 if ((bagData[x][6] + "").toLowerCase() === "yes") {
                     badge.className = "badge rounded-pill bg-danger";
                     badge.innerHTML = "Contains Fentanyl";
+                    fentNum++;
                 } else if ((bagData[x][6] + "").toLowerCase() === "no") {
                     badge.className = "badge rounded-pill bg-success";
                     badge.innerHTML = "Fentanyl Negative";
@@ -85,6 +99,7 @@ $.getJSON("/cards", function(data) {
                 if ((bagData[x][5] + "").toLowerCase() === "yes") {
                     badge.className = "badge rounded-pill bg-danger";
                     badge.innerHTML = "Contains Xylazine";
+                    tranqNum++;
                 } else if ((bagData[x][5] + "").toLowerCase() === "no") {
                     badge.className = "badge rounded-pill bg-success";
                     badge.innerHTML = "Xylazine Negative";
@@ -96,6 +111,7 @@ $.getJSON("/cards", function(data) {
                     var badge = td.appendChild(document.createElement("span"));
                     badge.className = "badge rounded-pill bg-info";
                     badge.innerHTML = "Lab Tested";
+                    testNum++;
                 }
             }
             // duplicate badges
@@ -108,6 +124,15 @@ $.getJSON("/cards", function(data) {
             }
 
         }
+        reportNum++;
+        var labelReports = document.getElementById("labelReports");
+        labelReports.innerHTML = "Total number of reports: <strong>" + reportNum + "</strong>";
+        var labelTests = document.getElementById("labelTests");
+        labelTests.innerHTML = "Total number of lab tests: <strong> " + testNum + "</strong>";
+        var labelFent = document.getElementById("labelFent");
+        labelFent.innerHTML = "Percentage of bags tested positive for fentanyl: <strong>" + Math.round(fentNum / bagData.length * 100) + "% (" + fentNum + "/" + bagData.length + ") </strong>";
+        var labelTranq = document.getElementById("labelTranq");
+        labelTranq.innerHTML = "Percentage of bags tested positive for xylazine: <strong>" + Math.round(tranqNum / bagData.length * 100) + "% (" + tranqNum + "/" + bagData.length + ") </strong>";
     }
 });
 
