@@ -26,7 +26,23 @@
             document.getElementById('controlBox').hidden = false;
             document.getElementById('printHide').hidden = false;
             document.getElementById('printHide1').hidden = false;
-        }
+    }
+    function checkPassword() {
+        var password = prompt("Please enter the password to access the admin page.");
+        fetch('/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({password: password})
+        })
+        // if () {
+        //     //window.location.href = "/adminview";
+        // }
+        // else {
+        //     alert("Incorrect password. Please try again.");
+        // }
+}
     </script>
     
     <!-- Place your stylesheet here-->
@@ -137,6 +153,10 @@
             </button>
             <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="right" onclick="printDiv('print-content')" title="Printing works best on spreadsheet view with no margins and landscape page orientation!">
                 Print <i class = "fas fa-print"></i>
+            </button>
+            <button type="button" class="btn btn-primary" onclick="checkPassword()">
+                Admin
+                <i class = "fas fa-lock"></i>
             </button>
         </div>
         <hr />
