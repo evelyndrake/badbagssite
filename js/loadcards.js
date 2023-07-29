@@ -70,7 +70,7 @@ $.getJSON("/cards", function(data) {
     });
 
     function drawElements() {
-        var numOfBags = 52;
+        var numOfBags = 1000;
         deck.innerHTML = "";
         if (toggle2.checked) {
             bagData = [...bagDataAlpha];
@@ -83,12 +83,24 @@ $.getJSON("/cards", function(data) {
         
         
         for (var x = bagData.length - 1; x > -1; x--) {
+            var today = new Date();
+
             // EXCLUDE UNC LABS
             if (bagData[x].length > 6 && bagData[x][7] != "") {
                 if ((bagData[x][7] + "").toLowerCase().includes("unc lab")) {
                     continue;
                 }
             }
+            var date = new Date(bagData[x][0]);
+            console.log(today);
+            var sixmonthsago = today;
+            sixmonthsago.setMonth(today.getMonth() - 6);
+            console.log(sixmonthsago);
+            if (date <= sixmonthsago) {
+                continue;
+            }
+            
+            
             // filters
             if (nameField.value != "") {
                 if (!((bagData[x][2] + " " + bagData[x][3]).toLowerCase().includes(nameField.value.toLowerCase()))) {
