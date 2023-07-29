@@ -15,6 +15,11 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4406f37967.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function openSheet() {
+            window.location.href = "http://docs.google.com/spreadsheets/d/1GM-xcvSiKyFr_oBy3Q9pw61HlnFRMqQSjZMeqNuAc60/edit?usp=sharing";
+        }
+    </script>
     <!-- Place your stylesheet here-->
 </head>
 
@@ -63,6 +68,11 @@
         <h1>Administrator View</h1>
         <p class="lead">View and edit number of times a bag has been reported.</p>
     </div>
+    <hr />
+    <button type="button" class="btn btn-primary" onclick="openSheet()">
+        Edit Spreadsheet
+        <i class = "fas fa-table"></i>
+    </button>
     <hr />
     <table class="table" id="spreadsheet">
 

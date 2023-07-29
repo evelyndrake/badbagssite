@@ -49,7 +49,6 @@ $.getJSON("/cards", function(data) {
             } else {
                 td.innerHTML = "No quantity specified"
             }
-            new_row.appendChild(document.createElement("button")).className = "btn btn-primary";
             td = new_row.appendChild(document.createElement("td"));
             if (bagData[x].length > 6 && bagData[x][7] != "") {
                 td.innerHTML = bagData[x][7]
@@ -90,3 +89,7 @@ $.getJSON("/cards", function(data) {
         }
     }
 });
+
+function updateBag(x) {
+    alert(x);
+}
