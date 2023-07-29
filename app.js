@@ -3,7 +3,7 @@ const express = require("express")
 const path = require('path')
 
 const app = express();
-
+app.use(express.json());
 // app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
@@ -19,9 +19,16 @@ app.get("/disclaimer", async(req, res) => {
 app.get("/labtested", async(req, res) => {
     res.sendFile(path.join(__dirname, 'labtested.html'));
 });
+app.get("/adminview", async(req, res) => {
+    res.sendFile(path.join(__dirname, 'adminview.html'));
+});
 app.get("/cards", async(req, res) => {
     const c = await cards();
     res.json(c);
+});
+app.post("/auth", async(req, res) => {
+    console.log(req.body);
+    res.send(req.body === process.env.ADMIN_PASSWORD);
 });
 
 app.listen(3000, () => {
@@ -32,7 +39,10 @@ app.listen(3000, () => {
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 // Initialize the sheet - doc ID is the long id in the sheets URL
+
 const doc = new GoogleSpreadsheet('1GM-xcvSiKyFr_oBy3Q9pw61HlnFRMqQSjZMeqNuAc60');
+
+
 
 // Initialize Auth - see https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
 async function cards() {
