@@ -24,11 +24,11 @@ $.getJSON("/cards", function(data) {
             }
         }
     }
-    bagData.sort(function(a, b) {
-        var textB = a[2].toUpperCase();
-        var textA = b[2].toUpperCase();
-        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    });
+    // bagData.sort(function(a, b) {
+    //     var textB = a[2].toUpperCase();
+    //     var textA = b[2].toUpperCase();
+    //     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    // });
     var table = document.getElementById("spreadsheet");
 
     var labelCount = document.getElementById("labelCount");
@@ -44,6 +44,8 @@ $.getJSON("/cards", function(data) {
         tranqNum = 0;
         var reportNum = 0;
         var testNum = 0;
+        var fentNeg = 0;
+        var tranqNeg = 0;
         table.innerHTML = "<thead><tr><th scope=\"col\">Date</th><th scope=\"col\">Name</th><th scope=\"col\">Location</th><th scope=\"col\">Times Reported</th><th scope=\"col\">Info</th></tr></thead>";
         for (var x = bagData.length - 1; x > -1; x--) {
             
@@ -91,6 +93,7 @@ $.getJSON("/cards", function(data) {
                 } else if ((bagData[x][6] + "").toLowerCase() === "no") {
                     badge.className = "badge rounded-pill bg-success";
                     badge.innerHTML = "Fentanyl Negative";
+                    fentNeg++;
                 }
             }
             // xylazine badges
@@ -103,6 +106,7 @@ $.getJSON("/cards", function(data) {
                 } else if ((bagData[x][5] + "").toLowerCase() === "no") {
                     badge.className = "badge rounded-pill bg-success";
                     badge.innerHTML = "Xylazine Negative";
+                    tranqNeg++;
                 }
             }
             // UNC badges
@@ -133,6 +137,10 @@ $.getJSON("/cards", function(data) {
         labelFent.innerHTML = "Percentage of bags tested positive for fentanyl: <strong>" + Math.round(fentNum / bagData.length * 100) + "% (" + fentNum + "/" + bagData.length + ") </strong>";
         var labelTranq = document.getElementById("labelTranq");
         labelTranq.innerHTML = "Percentage of bags tested positive for xylazine: <strong>" + Math.round(tranqNum / bagData.length * 100) + "% (" + tranqNum + "/" + bagData.length + ") </strong>";
+        var labelFentRatio = document.getElementById("labelFentRatio");
+        labelFentRatio.innerHTML = "Confirmed fentanyl content: <strong>" + fentNum + "</strong> positive bags, <strong>" + fentNeg + "</strong> negative bags";
+        var labelTranqRatio = document.getElementById("labelTranqRatio");
+        labelTranqRatio.innerHTML = "Confirmed xylazine content: <strong>" + tranqNum + "</strong> positive bags, <strong>" + tranqNeg + "</strong> negative bags";
     }
 });
 
