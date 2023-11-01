@@ -31,7 +31,7 @@ $.getJSON("/cards", function(data) {
         for (var x = bagData.length - 1; x > -1; x--) {
             // ONLY UNC LABS
             if (bagData[x].length > 6 && bagData[x][7] != "") {
-                if (!((bagData[x][7] + "").toLowerCase().includes("unc lab"))) {
+                if (!((bagData[x][7] + "").toLowerCase().includes("unc lab") || ((bagData[x][7] + "").toLowerCase().includes("lab") && (bagData[x][7] + "").toLowerCase().includes("results")))) {
                     continue;
                 }
             } else {

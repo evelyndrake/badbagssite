@@ -87,7 +87,7 @@ $.getJSON("/cards", function(data) {
 
             // EXCLUDE UNC LABS
             if (bagData[x].length > 6 && bagData[x][7] != "") {
-                if ((bagData[x][7] + "").toLowerCase().includes("unc lab")) {
+                if (!((bagData[x][7] + "").toLowerCase().includes("unc lab") || !((bagData[x][7] + "").toLowerCase().includes("lab") && (bagData[x][7] + "").toLowerCase().includes("results")))) {
                     continue;
                 }
             }
