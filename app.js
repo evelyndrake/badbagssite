@@ -40,7 +40,8 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 // Initialize the sheet - doc ID is the long id in the sheets URL
 
-const doc = new GoogleSpreadsheet('1GM-xcvSiKyFr_oBy3Q9pw61HlnFRMqQSjZMeqNuAc60');
+const doc = new GoogleSpreadsheet('1YCMxF1nOAO0yYD-XKFYqPuzca4VXoQnpWLpyBg5_t5s');
+// old test spreadsheet - new GoogleSpreadsheet('1GM-xcvSiKyFr_oBy3Q9pw61HlnFRMqQSjZMeqNuAc60');
 
 
 

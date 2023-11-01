@@ -130,7 +130,8 @@ $.getJSON("/cards", function(data) {
         }
         reportNum++;
         var labelReports = document.getElementById("labelReports");
-        labelReports.innerHTML = "Total number of reports: <strong>" + reportNum + "</strong>";
+        //labelReports.innerHTML = "Total number of reports: <strong>" + reportNum + "</strong>";
+        labelReports.innerHTML = "";
         var labelTests = document.getElementById("labelTests");
         labelTests.innerHTML = "Total number of lab tests: <strong> " + testNum + "</strong>";
         var labelFent = document.getElementById("labelFent");
