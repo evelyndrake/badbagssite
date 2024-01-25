@@ -1,8 +1,6 @@
 console.log("Loading cards...");
 // fetch /cards
 var bagData = [];
-var bagDataNormal = [];
-var bagDataAlpha = [];
 $.getJSON("/cards", function(data) {
     for (var i in data) {
         bagData.push(data[i]);
@@ -34,10 +32,15 @@ $.getJSON("/cards", function(data) {
             var textA = b[2].toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });
+    bagData.sort(function(a, b) {
+        var textB = a[2].toUpperCase();
+        var textA = b[2].toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
     var deck = document.getElementById("deck");
     var table = document.getElementById("spreadsheet");
     var toggle = document.getElementById("spreadsheetToggle");
-    var toggle2 = document.getElementById("alphaToggle");
+    // var toggle2 = document.getElementById("alphaToggle");
     var filterButton = document.getElementById("filterButton");
     var locationField = document.getElementById("locationField");
 
@@ -50,9 +53,9 @@ $.getJSON("/cards", function(data) {
     toggle.addEventListener("click", function() {
         drawElements();
     });
-    toggle2.addEventListener("click", function() {
-        drawElements();
-    });
+    // toggle2.addEventListener("click", function() {
+    //     drawElements();
+    // });
     filterButton.addEventListener("click", function() {
         drawElements();
     });
@@ -72,11 +75,7 @@ $.getJSON("/cards", function(data) {
     function drawElements() {
         var numOfBags = 1000;
         deck.innerHTML = "";
-        if (toggle2.checked) {
-            bagData = [...bagDataAlpha];
-        } else {
-            bagData = [...bagDataNormal];
-        }
+        
         if (toggle.checked) {
             table.innerHTML = "<thead><tr><th scope=\"col\">Date</th><th scope=\"col\">Name</th><th scope=\"col\">Location</th><th scope=\"col\">Info</th></tr></thead>";
         }
@@ -92,13 +91,13 @@ $.getJSON("/cards", function(data) {
                 }
             }
             var date = new Date(bagData[x][0]);
-            console.log(today);
-            var sixmonthsago = today;
-            sixmonthsago.setMonth(today.getMonth() - 6);
-            console.log(sixmonthsago);
-            if (date <= sixmonthsago) {
-                continue;
-            }
+            // console.log(today);
+            // var sixmonthsago = today;
+            // sixmonthsago.setMonth(today.getMonth() - 6);
+            // console.log(sixmonthsago);
+            // if (date <= sixmonthsago) {
+            //     continue;
+            // }
             
             
             // filters
